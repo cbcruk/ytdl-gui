@@ -3,9 +3,9 @@ import useStatus, {
   FAILURE,
   REQUEST,
   SUCCESS,
-} from '../../../../hooks/useStatus'
-import ytdl, { options } from '../../../../lib/ytdl'
-import { useMediaStore } from '../../../../store'
+} from '../../../../../../hooks/useStatus'
+import ytdl, { options } from '../../../../../../lib/ytdl'
+import useMediaStore from '../../../../../../store/useMediaStore'
 
 function useDownload(id) {
   const { status, setStatus } = useStatus()

@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react'
-import useStatus, { FAILURE, REQUEST, SUCCESS } from '../../../hooks/useStatus'
-import ytdl, { options } from '../../../lib/ytdl'
+import useStatus, {
+  FAILURE,
+  REQUEST,
+  SUCCESS,
+} from '../../../../hooks/useStatus'
+import ytdl, { options } from '../../../../lib/ytdl'
 
 function useInfo(id) {
   const { status, setStatus } = useStatus()

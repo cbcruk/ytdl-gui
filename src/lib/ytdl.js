@@ -1,6 +1,8 @@
 const { ipcRenderer } = window.require('electron')
 
-const download = `--newline -o "${process.env.REACT_APP_USERPROFILE}/Downloads/%(title)s-%(id)s.%(ext)s"`
+const download = `--newline -o "${
+  process.env.REACT_APP_USERPROFILE.trim() || '~'
+}/Downloads/%(title)s-%(id)s.%(ext)s"`
 
 export const options = {
   ids: '--get-id',

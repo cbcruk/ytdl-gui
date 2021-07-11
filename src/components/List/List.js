@@ -1,6 +1,6 @@
 import { Box } from '@chakra-ui/core'
 import React from 'react'
-import { useMediaStore } from '../../store'
+import useMediaStore from '../../store/useMediaStore'
 import Item from './Item'
 
 function List() {

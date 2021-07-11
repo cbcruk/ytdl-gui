@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const isDev = require('electron-is-dev')
 const path = require('path')
+const fixPath = require('fix-path')
 const { promisify } = require('util')
 const exec = promisify(require('child_process').exec)
 
@@ -18,11 +19,15 @@ const createWindow = () => {
     height: 600,
     webPreferences: {
       nodeIntegration: true,
+      contextIsolation: false,
     },
   })
 
   mainWindow.loadURL(startUrl)
-  mainWindow.webContents.openDevTools()
+
+  if (isDev) {
+    mainWindow.webContents.openDevTools()
+  }
 }
 
 app.on('ready', createWindow)
@@ -40,6 +45,7 @@ app.on('activate', () => {
 })
 
 ipcMain.handle('ytdl', async (_event, args) => {
+  fixPath()
   const { stdout } = await exec(`youtube-dl ${args}`)
   return stdout
 })

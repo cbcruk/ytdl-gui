@@ -1,6 +1,6 @@
 import { Box, Center, Flex, Image, Spacer } from '@chakra-ui/core'
 import React from 'react'
-import { Desc, DownloadMenu, Skeleton, Title } from './components'
+import { Desc, Menu, Skeleton, Title } from './components'
 import useInfo from './hooks/useInfo'
 
 function Item({ id }) {
@@ -45,7 +45,7 @@ function Item({ id }) {
       </Box>
       <Spacer />
       <Center>
-        <DownloadMenu id={id} />
+        <Menu id={id} />
       </Center>
     </Flex>
   )
