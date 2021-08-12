@@ -1,23 +1,14 @@
-const { ipcRenderer } = window.require('electron')
+const dargs = require('dargs')
+const execa = require('execa')
 
-const download = `--newline -o "${
-  process.env.REACT_APP_USERPROFILE.trim() || '~'
-}/Downloads/%(title)s-%(id)s.%(ext)s"`
+const args = (url, flags = {}) =>
+  [].concat(url, dargs(flags, { useEquals: false })).filter(Boolean)
 
-export const options = {
-  ids: '--get-id',
-  json: `-o "${process.env.REACT_APP_INIT_CWD}/log/%(id)s.%(ext)s" --skip-download --write-info-json --print-json`,
-  audio: `${download} -x --audio-format mp3`,
-  video: `${download}`,
-}
+const isJSON = (str) => str.startsWith('{')
 
-async function ytdl({ url, options }) {
-  const stdout = await ipcRenderer.invoke(
-    'ytdl',
-    `--no-warnings ${options} ${url.replace(/&t=.+/, '')}`
-  )
+const parse = ({ stdout }) => (isJSON(stdout) ? JSON.parse(stdout) : stdout)
 
-  return stdout
-}
+const raw = (url, flags, opts) =>
+  execa('youtube-dl.exe', args(url, flags), opts)
 
-export default ytdl
+module.exports = (url, flags, opts) => raw(url, flags, opts).then(parse)

@@ -1,31 +1,28 @@
 import { useCallback, useState } from 'react'
-import useStatus, { FAILURE, REQUEST, SUCCESS } from '../../../hooks/useStatus'
+import useStatus, { Status } from '../../../hooks/useStatus'
 import useMediaStore from '../../../store/useMediaStore'
-import ytdl, { options } from '../../../lib/ytdl'
 
 function useIds() {
   const [value, setValue] = useState('')
   const { status, setStatus } = useStatus()
   const setIds = useMediaStore((state) => state.setIds)
-  const isRequest = status === REQUEST
+  const isRequest = status === Status.REQUEST
 
   const handleSubmit = useCallback(
     async (e) => {
       e.preventDefault()
 
       try {
-        setStatus(REQUEST)
+        setStatus(Status.REQUEST)
 
-        const ids = await ytdl({
-          url: value,
-          options: options.ids,
-        })
+        const response = await fetch(`/api/ids/${value}`)
+        const { ids } = await response.json()
 
-        setStatus(SUCCESS)
+        setStatus(Status.SUCCESS)
         setIds(ids)
         setValue('')
       } catch (error) {
-        setStatus(FAILURE)
+        setStatus(Status.FAILURE)
       }
     },
     [setIds, setStatus, value]
