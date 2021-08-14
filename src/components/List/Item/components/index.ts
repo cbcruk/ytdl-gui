@@ -1,2 +1,2 @@
 export { default as Menus } from './Menus'
-export { default as Desc } from './Desc'
+export { default as Popover } from './Popover'

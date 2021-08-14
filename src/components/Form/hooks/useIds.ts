@@ -1,9 +1,8 @@
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import useStatus, { Status } from '../../../hooks/useStatus'
 import useMediaStore from '../../../store/useMediaStore'
 
 function useIds() {
-  const [value, setValue] = useState('')
   const { status, setStatus } = useStatus()
   const setIds = useMediaStore((state) => state.setIds)
   const isRequest = status === Status.REQUEST
@@ -15,22 +14,21 @@ function useIds() {
       try {
         setStatus(Status.REQUEST)
 
-        const response = await fetch(`/api/ids/${value}`)
-        const { ids } = await response.json()
+        const encodedValue = encodeURIComponent(e.target.url.value)
+        const response = await fetch(`/api/ids/${encodedValue}`)
+        const { data } = await response.json()
 
         setStatus(Status.SUCCESS)
-        setIds(ids)
-        setValue('')
+        setIds(data)
+        e.target.reset()
       } catch (error) {
         setStatus(Status.FAILURE)
       }
     },
-    [setIds, setStatus, value]
+    [setIds, setStatus]
   )
 
   return {
-    value,
-    setValue,
     isRequest,
     handleSubmit,
   }

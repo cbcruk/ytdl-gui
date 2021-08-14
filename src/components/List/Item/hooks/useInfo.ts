@@ -24,9 +24,9 @@ function useInfo(id: string) {
 
     fetch(`/api/info/${id}`)
       .then((r) => r.json())
-      .then((info) => {
+      .then(({ data }) => {
         setStatus(Status.SUCCESS)
-        setInfo(info)
+        setInfo(data)
       })
       .catch(() => {
         setStatus(Status.FAILURE)

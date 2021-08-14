@@ -6,7 +6,7 @@ import useStyles from './styles'
 
 function Form() {
   const classes = useStyles()
-  const { setValue, isRequest, handleSubmit } = useIds()
+  const { isRequest, handleSubmit } = useIds()
 
   return (
     <>
@@ -21,6 +21,7 @@ function Form() {
           <Search />
         </div>
         <InputBase
+          name="url"
           disabled={isRequest}
           placeholder="URL을 입력해 주세요"
           classes={{
@@ -28,7 +29,7 @@ function Form() {
             input: classes.inputInput,
           }}
           inputProps={{ 'aria-label': 'search' }}
-          onChange={(e) => setValue(e.target.value)}
+          required
         />
       </form>
     </>

@@ -19,7 +19,7 @@ function Lists() {
     <Paper square>
       <List className={classes.list}>
         {ids.map((id) => (
-          <Item id={id} />
+          <Item key={id} id={id} />
         ))}
       </List>
     </Paper>
